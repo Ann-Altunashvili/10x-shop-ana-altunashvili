@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/* Dark mode is driven by <html data-theme="dark"> instead of the OS setting only,
+   so the toggle in the header works and the choice can be saved. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* Design tokens: one set of CSS variables per theme. */
+:root {
+  color-scheme: light;
+  --page: #f3f5f9;
+  --surface: #ffffff;
+  --sunken: #e8ecf4;
+  --line: #d6dce8;
+  --ink: #18202f;
+  --muted: #566074;
+  --brand: #2447f5;
+  --brand-hover: #1a37d1;
+  --on-brand: #ffffff;
+  --brand-soft: #e6ebff;
+  --sale: #ffd23f;
+  --on-sale: #2b2100;
+  --ok: #0b6b4b;
+  --ok-soft: #dcf3e9;
+  --warn: #9a4800;
+  --warn-soft: #ffead5;
+  --danger: #c62828;
+  --danger-soft: #fde3e3;
+  --star: #e0a100;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0f131a;
+  --surface: #171c26;
+  --sunken: #212836;
+  --line: #2c3547;
+  --ink: #e8ecf4;
+  --muted: #a3adc0;
+  --brand: #8196ff;
+  --brand-hover: #9aaaff;
+  --on-brand: #0b1020;
+  --brand-soft: #1e2750;
+  --sale: #ffd23f;
+  --on-sale: #2b2100;
+  --ok: #5fd3a0;
+  --ok-soft: #12332a;
+  --warn: #ffb066;
+  --warn-soft: #3a2410;
+  --danger: #ff8a8a;
+  --danger-soft: #3d1b1f;
+  --star: #ffc53d;
+}
+
+/* Expose the variables as Tailwind colours: bg-surface, text-ink, border-line ...
+   "inline" makes Tailwind emit var(--surface) so the colour follows the theme. */
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-on-brand: var(--on-brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-sale: var(--sale);
+  --color-on-sale: var(--on-sale);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-star: var(--star);
+}
+
+/* Fonts and breakpoints used by the layout:
+   mobile <= 480px (1 column), tablet 481-1024px (2-3 columns), desktop > 1024px (4 columns). */
+@theme {
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --breakpoint-xs: 30.0625rem;
+  --breakpoint-desktop: 64.0625rem;
+  --animate-toast-in: toast-in 220ms ease-out;
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-page font-sans text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
