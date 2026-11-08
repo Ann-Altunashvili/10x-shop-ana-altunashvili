@@ -28,3 +28,14 @@ Only things that really happened are listed. An entry marked **Investigation** i
 - **Root cause:** `main.tsx` wraps the app in `StrictMode`. In development React mounts every component, unmounts it and mounts it again to reveal missing cleanup. `useFetch` aborts its request in the effect cleanup (`controller.abort()`), so the first request is `(canceled)` and the second one is the real one. I did not re-check the production build; React documents that `StrictMode` repeats effects only in development.
 - **Fix:** None needed, it is not a bug. The `(canceled)` request is the proof that the cleanup in `useFetch` works.
 - **What I learned:** Two identical requests in development can be `StrictMode` checking my cleanup, and I read the Status column before I call it a bug.
+
+## 3. Investigation: the Console showed 15 errors and 3 warnings that did not come from the app (Console)
+
+- **Symptom:** While I checked the Console on every page, it showed 15 errors `Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'M_ID')` and 3 warnings `[Telemetry.TS.AgentsExperimentationService]: WARN ...`.
+- **Reproduction:**
+  1. `npm run dev`, open the app in a normal Chrome window (with my extensions).
+  2. DevTools, Console, then open the catalog, a product, the cart, Login, Checkout, Orders, Profile and the 404 page.
+- **Tool:** The Console, and the file name in the right column of every message. The errors pointed to `200.js:1` and the warnings to `Grammarly.js:2`. None of them pointed to `src/...tsx` or to `index-....js`, which are the files of my app. To confirm it I opened an incognito window (extensions are off there by default) and went through the same pages: Login, Add to cart, Checkout, Orders, Profile, the 404 page and the theme toggle. The Console stayed empty.
+- **Root cause:** The messages came from scripts that browser extensions put into the page. `Grammarly.js` is a Grammarly file; I did not find out which extension `200.js` belongs to.
+- **Fix:** None needed, there is no bug in the app. The Console is clean on the dev server in a window without extensions.
+- **What I learned:** Read the file name of a Console message before I start debugging, and check in a window without extensions whether the message belongs to my code.
