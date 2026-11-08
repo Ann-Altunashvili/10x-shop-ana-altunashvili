@@ -2,7 +2,7 @@
 
 A demo online store built with **React 19, TypeScript and Tailwind CSS v4**. Products come from the public [DummyJSON](https://dummyjson.com) API. Login and checkout are local simulations: there is no real authentication and no payment.
 
-**Live demo:** _added after the first deploy_
+**Live demo:** https://10x-shop-ana-altunashvili.vercel.app
 
 ## Run it locally
 
