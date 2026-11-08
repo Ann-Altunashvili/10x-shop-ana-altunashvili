@@ -48,11 +48,14 @@ export default function CatalogPage() {
     window.scrollTo(0, 0)
   }, [params.page])
 
-  function handleAdd(product: Product) {
-    const result = addItem(product, 1)
-    if (result.ok) showToast('Added to cart ✓')
-    else showToast(result.message, 'error')
-  }
+  const handleAdd = useCallback(
+    (product: Product) => {
+      const result = addItem(product, 1)
+      if (result.ok) showToast('Added to cart ✓')
+      else showToast(result.message, 'error')
+    },
+    [addItem, showToast],
+  )
 
   const total = state.status === 'success' ? state.data.total : null
 

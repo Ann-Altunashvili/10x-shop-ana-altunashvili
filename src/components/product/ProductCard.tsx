@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import type { Product } from '../../types/product'
 import { formatCategory } from '../../utils/format'
@@ -11,7 +12,7 @@ interface ProductCardProps {
   onAdd: (product: Product) => void
 }
 
-export default function ProductCard({ product, onAdd }: ProductCardProps) {
+function ProductCard({ product, onAdd }: ProductCardProps) {
   const outOfStock = product.stock === 0
   const meta = product.brand ? `${formatCategory(product.category)} · ${product.brand}` : formatCategory(product.category)
 
@@ -59,3 +60,5 @@ export default function ProductCard({ product, onAdd }: ProductCardProps) {
     </article>
   )
 }
+
+export default memo(ProductCard)
