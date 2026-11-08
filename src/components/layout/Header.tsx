@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { useCart } from '../../context/CartContext'
 import { getDisplayName } from '../../utils/user'
 import Button from '../ui/Button'
 import { buttonStyles } from '../ui/buttonStyles'
@@ -12,6 +13,7 @@ const navLinkClass = ({ isActive }: { isActive: boolean }): string =>
   (isActive ? 'bg-brand-soft text-brand' : 'text-ink')
 
 export default function Header() {
+  const { itemCount } = useCart()
   const { user, isLoggedIn, logout } = useAuth()
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -32,6 +34,12 @@ export default function Header() {
       <NavLink to="/cart" className={navLinkClass} onClick={closeMenu}>
         <CartIcon />
         Cart
+        {itemCount > 0 && (
+          <span className="grid min-w-5 place-items-center rounded-full bg-brand px-1.5 text-xs font-bold text-on-brand tabular-nums">
+            {itemCount}
+            <span className="sr-only">{itemCount === 1 ? ' item' : ' items'} in cart</span>
+          </span>
+        )}
       </NavLink>
     </>
   )
