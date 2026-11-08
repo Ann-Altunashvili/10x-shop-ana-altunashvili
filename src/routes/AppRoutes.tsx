@@ -5,6 +5,8 @@ import CatalogPage from '../pages/CatalogPage'
 import CheckoutPage from '../pages/CheckoutPage'
 import LoginPage from '../pages/LoginPage'
 import NotFoundPage from '../pages/NotFoundPage'
+import OrderDetailsPage from '../pages/OrderDetailsPage'
+import OrdersPage from '../pages/OrdersPage'
 import ProductPage from '../pages/ProductPage'
 import ProtectedRoute from './ProtectedRoute'
 
@@ -19,6 +21,8 @@ export default function AppRoutes() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="orders" element={<OrdersPage />} />
+          <Route path="orders/:id" element={<OrderDetailsPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />
