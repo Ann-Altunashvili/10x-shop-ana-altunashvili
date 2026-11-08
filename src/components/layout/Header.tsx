@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
+import { useTheme } from '../../context/ThemeContext'
 import { getDisplayName } from '../../utils/user'
 import Button from '../ui/Button'
 import { buttonStyles } from '../ui/buttonStyles'
-import { CartIcon, CloseIcon, MenuIcon } from '../ui/Icons'
+import { CartIcon, CloseIcon, MenuIcon, MoonIcon, SunIcon } from '../ui/Icons'
 
 const navLinkClass = ({ isActive }: { isActive: boolean }): string =>
   'inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-medium transition-colors ' +
@@ -15,6 +16,7 @@ const navLinkClass = ({ isActive }: { isActive: boolean }): string =>
 export default function Header() {
   const { itemCount } = useCart()
   const { user, isLoggedIn, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -76,6 +78,15 @@ export default function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+            className="grid size-11 place-items-center rounded-lg text-ink transition-colors hover:bg-sunken focus-visible:outline-2 focus-visible:outline-brand"
+          >
+            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+          </button>
+
           <div className="hidden items-center gap-3 md:flex">{accountActions}</div>
 
           <button
