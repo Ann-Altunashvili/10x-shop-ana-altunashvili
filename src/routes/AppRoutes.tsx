@@ -3,6 +3,7 @@ import Layout from '../components/layout/Layout'
 import CatalogPage from '../pages/CatalogPage'
 import LoginPage from '../pages/LoginPage'
 import NotFoundPage from '../pages/NotFoundPage'
+import ProductPage from '../pages/ProductPage'
 
 export default function AppRoutes() {
   return (
@@ -10,6 +11,7 @@ export default function AppRoutes() {
       <Route element={<Layout />}>
         <Route index element={<CatalogPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="products/:id" element={<ProductPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
