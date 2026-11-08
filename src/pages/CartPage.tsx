@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import CartLine from '../components/cart/CartLine'
 import CartSummary from '../components/cart/CartSummary'
+import PromoCodeForm from '../components/cart/PromoCodeForm'
 import Button from '../components/ui/Button'
 import { buttonStyles } from '../components/ui/buttonStyles'
 import EmptyState from '../components/ui/EmptyState'
@@ -9,7 +10,8 @@ import { useToast } from '../context/ToastContext'
 import { getNotice } from '../utils/routerState'
 
 export default function CartPage() {
-  const { items, cart, setQuantity, removeItem, clearCart } = useCart()
+  const { items, cart, promoCode, setQuantity, removeItem, clearCart, applyPromo, removePromo } =
+    useCart()
   const { showToast } = useToast()
   const navigate = useNavigate()
   const notice = getNotice(useLocation().state)
@@ -58,6 +60,7 @@ export default function CartPage() {
           </section>
 
           <CartSummary cart={cart}>
+            <PromoCodeForm promoCode={promoCode} onApply={applyPromo} onRemove={removePromo} />
             <Button size="lg" className="w-full" onClick={() => navigate('/checkout')}>
               Proceed to checkout
             </Button>
