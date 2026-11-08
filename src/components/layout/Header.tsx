@@ -1,5 +1,9 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
+import { getDisplayName } from '../../utils/user'
+import Button from '../ui/Button'
+import { buttonStyles } from '../ui/buttonStyles'
 import { CartIcon, CloseIcon, MenuIcon } from '../ui/Icons'
 
 const navLinkClass = ({ isActive }: { isActive: boolean }): string =>
@@ -8,9 +12,17 @@ const navLinkClass = ({ isActive }: { isActive: boolean }): string =>
   (isActive ? 'bg-brand-soft text-brand' : 'text-ink')
 
 export default function Header() {
+  const { user, isLoggedIn, logout } = useAuth()
+  const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
 
   const closeMenu = () => setMenuOpen(false)
+
+  function handleLogout() {
+    logout()
+    closeMenu()
+    navigate('/') // the cart is NOT cleared on logout
+  }
 
   const links = (
     <>
@@ -22,6 +34,19 @@ export default function Header() {
         Cart
       </NavLink>
     </>
+  )
+
+  const accountActions = isLoggedIn ? (
+    <>
+      <span className="hidden text-sm text-muted lg:inline">Hi, {getDisplayName(user)}</span>
+      <Button variant="secondary" onClick={handleLogout}>
+        Log out
+      </Button>
+    </>
+  ) : (
+    <Link to="/login" className={buttonStyles('primary')} onClick={closeMenu}>
+      Log in
+    </Link>
   )
 
   return (
@@ -43,6 +68,8 @@ export default function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          <div className="hidden items-center gap-3 md:flex">{accountActions}</div>
+
           <button
             type="button"
             onClick={() => setMenuOpen((open) => !open)}
@@ -61,6 +88,7 @@ export default function Header() {
           <nav aria-label="Mobile" className="flex flex-col gap-1 py-3">
             {links}
           </nav>
+          <div className="flex items-center gap-3">{accountActions}</div>
         </div>
       )}
     </header>
