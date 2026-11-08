@@ -10,6 +10,18 @@
     />
     <title>10X Shop</title>
 
+    <!-- Apply the saved theme before the first paint to avoid a light/dark flash. -->
+    <script>
+      try {
+        var theme = JSON.parse(localStorage.getItem('shop_theme') || 'null')
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        document.documentElement.dataset.theme = theme
+      } catch (error) {
+        /* storage can be blocked - the app falls back to the light theme */
+      }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
