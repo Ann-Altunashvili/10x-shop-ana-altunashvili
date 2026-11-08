@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import CartLine from '../components/cart/CartLine'
 import CartSummary from '../components/cart/CartSummary'
 import Button from '../components/ui/Button'
@@ -6,10 +6,13 @@ import { buttonStyles } from '../components/ui/buttonStyles'
 import EmptyState from '../components/ui/EmptyState'
 import { useCart } from '../context/CartContext'
 import { useToast } from '../context/ToastContext'
+import { getNotice } from '../utils/routerState'
 
 export default function CartPage() {
   const { items, cart, setQuantity, removeItem, clearCart } = useCart()
   const { showToast } = useToast()
+  const navigate = useNavigate()
+  const notice = getNotice(useLocation().state)
 
   function handleRemove(productId: number) {
     removeItem(productId)
@@ -23,6 +26,12 @@ export default function CartPage() {
   return (
     <div>
       <h1 className="mb-6 text-4xl font-bold">Cart</h1>
+
+      {notice && (
+        <p role="status" className="mb-6 rounded-xl border border-brand/40 bg-brand-soft px-4 py-3 text-sm font-medium">
+          {notice}
+        </p>
+      )}
 
       {items.length === 0 ? (
         <EmptyState title="Your cart is empty." description="Add a product and it will show up here.">
@@ -48,7 +57,11 @@ export default function CartPage() {
             </Button>
           </section>
 
-          <CartSummary cart={cart} />
+          <CartSummary cart={cart}>
+            <Button size="lg" className="w-full" onClick={() => navigate('/checkout')}>
+              Proceed to checkout
+            </Button>
+          </CartSummary>
         </div>
       )}
     </div>
