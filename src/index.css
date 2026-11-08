@@ -7,18 +7,18 @@
 /* Design tokens: one set of CSS variables per theme. */
 :root {
   color-scheme: light;
-  --page: #f3f5f9;
-  --surface: #ffffff;
-  --sunken: #e8ecf4;
-  --line: #d6dce8;
-  --ink: #18202f;
-  --muted: #566074;
-  --brand: #2447f5;
-  --brand-hover: #1a37d1;
+  --page: #eef3f1;
+  --surface: #fbfdfc;
+  --sunken: #dfe8e5;
+  --line: #c8d6d2;
+  --ink: #0c2229;
+  --muted: #4a6068;
+  --brand: #ad4305;
+  --brand-hover: #8c3604;
   --on-brand: #ffffff;
-  --brand-soft: #e6ebff;
-  --sale: #ffd23f;
-  --on-sale: #2b2100;
+  --brand-soft: #fdeadb;
+  --sale: #6fd3e0;
+  --on-sale: #052a33;
   --ok: #0b6b4b;
   --ok-soft: #dcf3e9;
   --warn: #9a4800;
@@ -30,18 +30,18 @@
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --page: #0f131a;
-  --surface: #171c26;
-  --sunken: #212836;
-  --line: #2c3547;
-  --ink: #e8ecf4;
-  --muted: #a3adc0;
-  --brand: #8196ff;
-  --brand-hover: #9aaaff;
-  --on-brand: #0b1020;
-  --brand-soft: #1e2750;
-  --sale: #ffd23f;
-  --on-sale: #2b2100;
+  --page: #071a20;
+  --surface: #0e262e;
+  --sunken: #153440;
+  --line: #234452;
+  --ink: #e6f3f3;
+  --muted: #9fbcc2;
+  --brand: #ff9b3d;
+  --brand-hover: #ffb066;
+  --on-brand: #2a1200;
+  --brand-soft: #3a2410;
+  --sale: #5fd6e6;
+  --on-sale: #04252b;
   --ok: #5fd3a0;
   --ok-soft: #12332a;
   --warn: #ffb066;
