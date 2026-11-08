@@ -43,6 +43,16 @@ export default function Header() {
           </span>
         )}
       </NavLink>
+      {isLoggedIn && (
+        <>
+          <NavLink to="/orders" className={navLinkClass} onClick={closeMenu}>
+            Orders
+          </NavLink>
+          <NavLink to="/profile" className={navLinkClass} onClick={closeMenu}>
+            Profile
+          </NavLink>
+        </>
+      )}
     </>
   )
 
