@@ -5,6 +5,7 @@ import {
   useEffect,
   useMemo,
   useReducer,
+  useRef,
   type ReactNode,
 } from 'react'
 import { Cart } from '../models/Cart'
@@ -42,14 +43,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const cart = useMemo(() => new Cart(state.items, state.promoCode ?? null), [state])
 
-  const addItem = useCallback(
-    (product: CartProduct, qty = 1): AddItemResult => {
-      const result = checkAddItem(state.items, product, qty)
-      if (result.ok) dispatch({ type: 'ADD_ITEM', product, qty })
-      return result
-    },
-    [state.items],
-  )
+  // addItem reads the latest items from a ref, so it can keep one identity for the whole life of the
+  // provider. A stable function lets memoized children skip re-rendering when the cart changes.
+  const itemsRef = useRef(state.items)
+  useEffect(() => {
+    itemsRef.current = state.items
+  }, [state.items])
+
+  const addItem = useCallback((product: CartProduct, qty = 1): AddItemResult => {
+    const result = checkAddItem(itemsRef.current, product, qty)
+    if (result.ok) dispatch({ type: 'ADD_ITEM', product, qty })
+    return result
+  }, [])
 
   const setQuantity = useCallback(
     (productId: number, qty: number) => dispatch({ type: 'SET_QTY', productId, qty }),
